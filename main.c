@@ -1,7 +1,13 @@
 #include <windows.h>
 #include <stdio.h>
+#include <locale.h>
 
 int main() {
+
+	setlocale(LC_ALL, "Russian");
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+
 	char binfile[100];
 	int count;
 
@@ -49,6 +55,38 @@ int main() {
 		printf("%d %s %.2f\n", e.num, e.name, e.hours);
 	}
 	fclose(fileb);
+
+	char reportfile[100];
+	double rate;
+
+	printf("\nEnter report file name: ");
+	scanf("%s", reportfile);
+	
+	printf("Enter rate per hour: ");
+	scanf("%lf", &rate);
+
+	char cmdReporter[300];
+	sprintf(cmdReporter, "reporter.exe %s %s %.2f", binfile, reportfile, rate);
+
+	ZeroMemory(&si, sizeof(si));
+	ZeroMemory(&pi, sizeof(pi));
+
+	if(!CreateProcess(NULL, cmdReporter, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)){
+		printf("Failed to start Reporter\n");
+		return 1;
+	}
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
+
+	FILE* filer = fopen(reportfile, "r");
+	char line[256];
+	printf("\nReport:\n");
+	while(fgets(line, sizeof(line), filer)){
+		printf("%s", line);
+	}
+	fclose(filer);
 
 	return 0;
 }

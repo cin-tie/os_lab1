@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+#include <windows.h>
 
 struct employee{
 	int num;
@@ -8,6 +10,10 @@ struct employee{
 };
 
 int main(int argc, char* argv[]){
+	setlocale(LC_ALL, "Russian");
+	SetConsoleOutputCP(1251);
+	SetConsoleCP(1251);
+
 	if(argc != 4){
 		printf("Usage: reporter <binfile> <reportfile> <rate>\n");
 		return 1;
@@ -30,7 +36,7 @@ int main(int argc, char* argv[]){
 		return 1;
 	}
 
-	fprintf(filer, "РћС‚С‡РµС‚ РїРѕ С„Р°Р№Р»Сѓ \"%s\"\n", binfile);
+	fprintf(filer, "Отчет по файлу \"%s\"\n", binfile);
 	fprintf(filer, "Num\tName\tHours\tSalary\n");
 
 	struct employee e;

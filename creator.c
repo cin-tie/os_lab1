@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+#include <windows.h>
 
 struct employee{
 	int num;
@@ -8,6 +10,10 @@ struct employee{
 }; 
 
 int main(int argc, char* argv[]){
+	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+
 	if(argc != 3){
 		printf("Usage: creator <filename> <count>\n");
 		return 1;
