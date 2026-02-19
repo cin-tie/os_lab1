@@ -25,7 +25,6 @@ int main() {
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
-	ZeroMemory(&pi, sizeof(pi));
 
 	if(!CreateProcess(NULL, cmdCreator, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)){
 		printf("Failed to start Creator\n");
@@ -33,8 +32,8 @@ int main() {
 	}
 
 	WaitForSingleObject(pi.hProcess, INFINITE);
-	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
+	CloseHandle(pi.hProcess);
 
 	FILE* fileb;
        	fileb = fopen(binfile, "rb");
@@ -69,7 +68,6 @@ int main() {
 	sprintf(cmdReporter, "reporter.exe %s %s %.2f", binfile, reportfile, rate);
 
 	ZeroMemory(&si, sizeof(si));
-	ZeroMemory(&pi, sizeof(pi));
 
 	if(!CreateProcess(NULL, cmdReporter, NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi)){
 		printf("Failed to start Reporter\n");
@@ -77,8 +75,8 @@ int main() {
 	}
 
 	WaitForSingleObject(pi.hProcess, INFINITE);
-	CloseHandle(pi.hProcess);
 	CloseHandle(pi.hThread);
+	CloseHandle(pi.hProcess);
 
 	FILE* filer = fopen(reportfile, "r");
 	char line[256];
