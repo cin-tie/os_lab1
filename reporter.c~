@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
 		return 1;
 	}
 
-	fprintf(filer, "Отчет по файлу \"%s\"\n", binfile);
+	fprintf(filer, "Отчет по файлу \"%s\"\n", binfile)l
 	fprintf(filer, "Num\tName\tHours\tSalary\n");
 
 	struct employee e;
